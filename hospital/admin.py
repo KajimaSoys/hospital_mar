@@ -79,6 +79,7 @@ class InsurancePolicyAdmin(admin.ModelAdmin):
     search_fields = ['id', ]
     autocomplete_fields = ['underwriter', ]
 
+
 @admin.register(Patient)
 class PatientAdmin(admin.ModelAdmin):
     model = Patient

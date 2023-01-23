@@ -11,6 +11,15 @@ def default_id():
     max_id += 1
     return max_id
 
+def default_insurance_id():
+    id_list = InsurancePolicy.objects.values_list('id', flat=True).distinct()
+    if not id_list:
+        max_id = 0
+    else:
+        max_id = max(id_list)
+    max_id += 1
+    return max_id
+
 class Patient(models.Model):
     id = models.CharField(verbose_name='Номер карточки пациента', max_length=10, primary_key=True)
     name = models.CharField(verbose_name='ФИО пациента', max_length=60)
@@ -83,7 +92,7 @@ class Underwriter(models.Model):
         verbose_name_plural = 'Страховая компании'
 
 class InsurancePolicy(models.Model):
-    id = models.BigAutoField(verbose_name='ИД полиса', primary_key=True, default=1160000000)
+    id = models.BigIntegerField(verbose_name='ИД полиса', primary_key=True, default=default_insurance_id)
     underwriter = models.ForeignKey(Underwriter, on_delete=models.CASCADE, verbose_name='Страхования компания')
     balance = models.BigIntegerField(verbose_name='Баланс страхового полиса', default=15000)
 
